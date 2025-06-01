@@ -1,0 +1,22 @@
+{
+  "name": "teebay",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:web": "turbo run dev --filter=web",
+    "dev:api": "turbo run dev --filter=api"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.29",
+    "prisma": "6.8.2",
+    "tsx": "^4.19.4",
+    "turbo": "^1.10.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@prisma/client": "6.8.2"
+  }
+}
