@@ -1,14 +1,9 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
-function App() {
+export function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<div>Welcome to Teebay</div>} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route index element={<div>hello</div>} />
+    </Routes>
   );
 }
-
-export default App;
