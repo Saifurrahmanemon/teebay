@@ -1,6 +1,6 @@
-import { createContext, useContext, ReactNode, useState, useEffect } from "react";
-import { useApolloClient } from "@apollo/client";
-import { useNavigate } from "react-router-dom";
+import { createContext, useContext, ReactNode, useState, useEffect } from 'react';
+import { useApolloClient } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
 
 type AuthContextType = {
   isAuthenticated: boolean;
@@ -19,8 +19,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const userData = localStorage.getItem("user");
+    const token = localStorage.getItem('token');
+    const userData = localStorage.getItem('user');
 
     if (token && userData) {
       setUser(JSON.parse(userData));
@@ -29,18 +29,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const login = (token: string, user: any) => {
-    localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
     setUser(user);
-    navigate("/");
+    navigate('/');
   };
 
   const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     setUser(null);
     client.resetStore();
-    navigate("/login");
+    navigate('/login');
   };
 
   return (
@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 };

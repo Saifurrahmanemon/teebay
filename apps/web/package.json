@@ -1,9 +1,11 @@
 {
   "name": "web",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "codegen": "graphql-codegen --config codegen.yml",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@apollo/client": "^3.13.8",
@@ -28,6 +30,8 @@
     "@graphql-codegen/typescript": "^4.1.6",
     "@graphql-codegen/typescript-operations": "^4.6.1",
     "@graphql-codegen/typescript-react-apollo": "^4.3.3",
+    "@teebay/config": "workspace:^",
+    "@teebay/validations": "^1.0.0",
     "@types/node": "^22.15.29",
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.5",

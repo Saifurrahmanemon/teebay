@@ -1,7 +1,5 @@
-import { RegisterForm } from "@/components/auth/register-form";
-import { Container } from "@mantine/core";
-
-
+import { RegisterForm } from '@/components/auth/register-form';
+import { Container } from '@mantine/core';
 
 export function RegisterPage() {
   return (

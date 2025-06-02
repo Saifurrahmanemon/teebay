@@ -5,7 +5,6 @@ export const loginSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-
 export const registerSchema = z
   .object({
     email: z.string().email("Invalid email"),
@@ -20,7 +19,6 @@ export const registerSchema = z
     message: "Passwords don't match",
     path: ["confirmPassword"],
   });
-
 
 export type LoginInput = z.infer<typeof loginSchema>;
 export type RegisterInput = z.infer<typeof registerSchema>;

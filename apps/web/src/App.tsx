@@ -1,8 +1,8 @@
-import { Routes, Route } from "react-router-dom";
-import { LoginPage } from "./pages/login";
-import { RegisterPage } from "./pages/register";
-import { ProtectedRoute } from "./components/auth/protected-routes";
-import { HomePage } from "./components/home/home-page";
+import { Routes, Route } from 'react-router-dom';
+import { LoginPage } from './pages/login';
+import { RegisterPage } from './pages/register';
+import { ProtectedRoute } from './components/auth/protected-routes';
+import { HomePage } from './components/home/home-page';
 
 export function App() {
   return (

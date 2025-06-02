@@ -1,5 +1,5 @@
-import { Button, Title } from "@mantine/core";
-import { useAuth } from "@/context/auth-context";
+import { Button, Title } from '@mantine/core';
+import { useAuth } from '@/context/auth-context';
 
 export function HomePage() {
   const { user, logout } = useAuth();

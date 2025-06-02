@@ -1,8 +1,7 @@
-import { useForm } from "@mantine/form";
-import { useMutation } from "@apollo/client";
-import { LOGIN_MUTATION } from "@/graphql/auth";
-import { loginSchema } from "@/schemas/auth";
-import { zodResolver } from "mantine-form-zod-resolver";
+import { useForm } from '@mantine/form';
+import { useMutation } from '@apollo/client';
+import { LOGIN_MUTATION } from '@/graphql/auth';
+import { zodResolver } from 'mantine-form-zod-resolver';
 import {
   TextInput,
   PasswordInput,
@@ -18,26 +17,22 @@ import {
   rem,
   Group,
   Divider,
-} from "@mantine/core";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/context/auth-context";
-import { notifications } from "@mantine/notifications";
-import {
-  IconAt,
-  IconLock,
-  IconBrandGoogle,
-  IconBrandGithub,
-} from "@tabler/icons-react";
+} from '@mantine/core';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/auth-context';
+import { notifications } from '@mantine/notifications';
+import { IconAt, IconLock, IconBrandGoogle, IconBrandGithub } from '@tabler/icons-react';
+import { loginSchema } from '@teebay/validations';
 
 export function LoginForm() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const form = useForm({
-    mode: "uncontrolled",
+    mode: 'uncontrolled',
     initialValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
     validate: zodResolver(loginSchema),
   });
@@ -46,18 +41,18 @@ export function LoginForm() {
     onCompleted: (data) => {
       login(data.login.token, data.login.user);
       notifications.show({
-        title: "Welcome back!",
-        message: "You have successfully logged in",
-        color: "teal",
+        title: 'Welcome back!',
+        message: 'You have successfully logged in',
+        color: 'teal',
         withCloseButton: true,
         icon: <IconAt size={18} />,
       });
     },
     onError: (error) => {
       notifications.show({
-        title: "Login failed",
+        title: 'Login failed',
         message: error.message,
-        color: "red",
+        color: 'red',
         withCloseButton: true,
       });
     },
@@ -81,7 +76,7 @@ export function LoginForm() {
         radius="md"
         w="100%"
         maw={480}
-        style={{ backdropFilter: "blur(8px)" }}
+        style={{ backdropFilter: 'blur(8px)' }}
       >
         <Box mb="xl" ta="center">
           <Title order={2} fw={700}>
@@ -98,14 +93,14 @@ export function LoginForm() {
               label="Email address"
               placeholder="your@email.com"
               leftSection={<IconAt size={18} />}
-              {...form.getInputProps("email")}
+              {...form.getInputProps('email')}
             />
 
             <PasswordInput
               label="Password"
               placeholder="Your password"
               leftSection={<IconLock size={18} />}
-              {...form.getInputProps("password")}
+              {...form.getInputProps('password')}
             />
 
             <Group justify="space-between" mt="xs">
@@ -114,32 +109,21 @@ export function LoginForm() {
                 type="button"
                 size="xs"
                 c="dimmed"
-                onClick={() => navigate("/forgot-password")}
+                onClick={() => navigate('/forgot-password')}
               >
                 Forgot password?
               </Anchor>
             </Group>
 
-            <Button
-              type="submit"
-              loading={loading}
-              fullWidth
-              mt="md"
-              size="md"
-            >
+            <Button type="submit" loading={loading} fullWidth mt="md" size="md">
               Sign in
             </Button>
           </Stack>
         </form>
 
         <Text ta="center" mt="xl" c="dimmed" size="sm">
-          Don't have an account?{" "}
-          <Anchor
-            component="button"
-            type="button"
-            fw={600}
-            onClick={() => navigate("/register")}
-          >
+          Don't have an account?{' '}
+          <Anchor component="button" type="button" fw={600} onClick={() => navigate('/register')}>
             Create account
           </Anchor>
         </Text>
