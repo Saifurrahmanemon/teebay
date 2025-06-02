@@ -22,10 +22,8 @@ const yoga = createYoga({
   },
 })
 
-// Mount GraphQL endpoint
-app.use('/graphql', yoga)
+app.use("/graphql", yoga);
 
-// Health check endpoint
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() })
 })
