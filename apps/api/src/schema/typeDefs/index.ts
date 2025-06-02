@@ -1,34 +1,97 @@
 export const typeDefs = `
-  type User {
-    id: ID!
-    email: String!
-    name: String
-    posts: [Post!]!
-    createdAt: String!
-    updatedAt: String!
+  enum Category {
+    ELECTRONICS
+    FURNITURE
+    HOME_APPLIANCES
+    SPORTING_GOODS
+    OUTDOOR
+    TOYS
   }
 
-  type Post {
-    id: ID!
-    title: String!
-    content: String
-    published: Boolean!
-    author: User!
+  type User {
+    id: Int!
+    email: String!
+    firstName: String!
+    lastName: String!
+    phone: String
+    address: String
     createdAt: String!
     updatedAt: String!
+    products: [Product!]!
+    sales: [Sale!]!
+    purchases: [Sale!]!
+    rentalsOut: [Rental!]!
+    rentalsIn: [Rental!]!
+  }
+
+  type Product {
+    id: Int!
+    title: String!
+    description: String!
+    price: Float!
+    rentPrice: Float!
+    categories: [Category!]!
+    user: User!
+    sales: [Sale!]!
+    rentals: [Rental!]!
+    createdAt: String!
+    updatedAt: String!
+    isDeleted: Boolean!
+    isAvailable: Boolean!
+  }
+
+  type Sale {
+    id: Int!
+    product: Product!
+    buyer: User!
+    seller: User!
+    createdAt: String!
+  }
+
+  type Rental {
+    id: Int!
+    product: Product!
+    lender: User!
+    borrower: User!
+    fromDate: String!
+    toDate: String!
+    createdAt: String!
+  }
+
+  type AuthPayload {
+    token: String!
+    user: User!
   }
 
   type Query {
+    me: User
     users: [User!]!
     user(id: ID!): User
-    posts: [Post!]!
-    post(id: ID!): Post
+    getProduct(id: Int!): Product
+    getAllProducts: [Product!]!
   }
 
   type Mutation {
-    createUser(email: String!, name: String): User!
-    createPost(title: String!, content: String, authorId: ID!): Post!
-    updatePost(id: ID!, title: String, content: String, published: Boolean): Post
-    deletePost(id: ID!): Post
+    register(
+      email: String!
+      password: String!
+      firstName: String!
+      lastName: String!
+      phone: String
+      address: String
+    ): AuthPayload!
+
+    login(email: String!, password: String!): AuthPayload!
+
+    createProduct(
+      title: String!
+      description: String!
+      price: Float!
+      rentPrice: Float!
+      categories: [Category!]!
+    ): Product!
+
+    markProductAsSold(productId: Int!): Boolean
+    rentProduct(productId: Int!, toDate: String!): Rental!
   }
-`
+`;
