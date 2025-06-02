@@ -1,0 +1,17 @@
+{
+  "name": "@teebay/validations",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "types": "index.ts",
+  "exports": {
+    ".": {
+      "import": "./index.ts"
+    }
+  },
+  "dependencies": {
+    "zod": "^3.25.46"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
