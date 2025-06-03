@@ -51,7 +51,33 @@ export const resolvers = {
           include: { user: true },
         });
 
-        return products.map(validateProductResponse);
+        return products;
+      },
+    ),
+
+    getAvailableProducts: logResolver(
+      'Query.getAvailableProducts',
+      async (_: any, __: any, { prisma }: Context) => {
+        const products = prisma.product.findMany({
+          where: { isDeleted: false, isAvailable: true },
+          include: { user: true },
+        });
+        return products;
+      },
+    ),
+
+    getMyTransactions: logResolver(
+      'Query.getMyTransactions',
+      async (_: any, __: any, { prisma, userId }: Context) => {
+        if (!userId) throw new AuthenticationError();
+
+        const id = parseInt(userId);
+        return {
+          purchases: await prisma.sale.findMany({ where: { buyerId: id } }),
+          sales: await prisma.sale.findMany({ where: { sellerId: id } }),
+          rentalsOut: await prisma.rental.findMany({ where: { lenderId: id } }),
+          rentalsIn: await prisma.rental.findMany({ where: { borrowerId: id } }),
+        };
       },
     ),
 
