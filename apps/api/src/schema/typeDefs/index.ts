@@ -8,6 +8,14 @@ export const typeDefs = `
     TOYS
   }
 
+  enum RentPeriod {
+    HOURLY
+    DAILY
+    WEEKLY
+    MONTHLY
+  } 
+
+
   type User {
     id: Int!
     email: String!
@@ -30,6 +38,7 @@ export const typeDefs = `
     description: String!
     price: Float!
     rentPrice: Float!
+    rentPeriod:  RentPeriod!
     categories: [Category!]!
     user: User!
     sales: [Sale!]!
@@ -63,12 +72,29 @@ export const typeDefs = `
     user: User!
   }
 
+  type ProductFormSession {
+  step: Int  
+  totalSteps: Int    
+  formData: ProductFormData!  
+  }
+    
+  type ProductFormData {
+    title: String
+    categories: [Category!]
+    description: String
+    price: Float
+    rentPrice: Float
+    rentPeriod: RentPeriod
+  }
+
+
+
   type Query {
     me: User
     users: [User!]!
     user(id: ID!): User
-    getProduct(id: Int!): Product
-    getAllProducts: [Product!]!
+    getProductsByUser(userId: ID!): [Product!]!
+    getProductFormState(id: ID): ProductFormSession!
   }
 
   type Mutation {
@@ -83,15 +109,15 @@ export const typeDefs = `
 
     login(email: String!, password: String!): AuthPayload!
 
-    createProduct(
-      title: String!
-      description: String!
-      price: Float!
-      rentPrice: Float!
-      categories: [Category!]!
-    ): Product!
-
-    markProductAsSold(productId: Int!): Boolean
-    rentProduct(productId: Int!, toDate: String!): Rental!
+    createProductStep(step: Int!, formData: ProductFormInput!): ProductFormSession!
+    submitProductForm: Product!
   }
+    input ProductFormInput {
+     title: String
+     categories: [Category!]
+     description: String
+     price: Float
+     rentPrice: Float
+     rentPeriod: RentPeriod
+    }
 `;

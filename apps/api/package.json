@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.7.0",
-    "@teebay/validations": "*",
+    "@teebay/validations": "^1.0.0",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.0",

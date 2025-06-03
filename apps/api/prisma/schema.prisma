@@ -22,6 +22,8 @@ model User {
   purchases  Sale[]    @relation("Seller")
   rentalsOut Rental[]  @relation("RentedOut")
   rentalsIn  Rental[]  @relation("RentedIn")
+
+  ProductFormSession ProductFormSession[]
 }
 
 model Product {
@@ -31,6 +33,7 @@ model Product {
   price       Float
   rentPrice   Float
   categories  Category[]
+  rentPeriod  RentPeriod
   userId      Int
   user        User       @relation(fields: [userId], references: [id])
   sales       Sale[]
@@ -65,6 +68,18 @@ model Rental {
   createdAt  DateTime @default(now())
 }
 
+model ProductFormSession {
+  id        String   @id @default(uuid())
+  userId    Int      
+  user      User     @relation(fields: [userId], references: [id])
+  step      Int   
+  formData  Json     
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId])
+}
+
 enum Category {
   ELECTRONICS
   FURNITURE
@@ -72,4 +87,11 @@ enum Category {
   SPORTING_GOODS
   OUTDOOR
   TOYS
+}
+
+enum RentPeriod {
+  HOURLY
+  DAILY
+  WEEKLY
+  MONTHLY
 }
