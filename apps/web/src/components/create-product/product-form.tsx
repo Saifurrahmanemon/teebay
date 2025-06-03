@@ -1,4 +1,5 @@
-// src/components/products/ProductForm.tsx
+//TODO: make data persist even after reload(backend ready)
+
 import { useState } from 'react';
 import { useForm } from '@mantine/form';
 import { z } from 'zod';
@@ -227,10 +228,11 @@ export function ProductForm({ initialData }: { initialData?: any }) {
         <Stack gap="md" mt="md">
           <Title order={3}>Summery:</Title>
           <Text size="lg" fw={500}>
-           Title:  {form.values.title}
+            Title: {form.values.title}
           </Text>
           <Group gap="xs">
-           <Text>Categories: </Text> {form.values.categories.map((cat: string) => (
+            <Text>Categories: </Text>{' '}
+            {form.values.categories.map((cat: string) => (
               <Badge key={cat}>{cat}</Badge>
             ))}
           </Group>
