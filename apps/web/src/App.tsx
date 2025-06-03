@@ -5,6 +5,7 @@ import { ProtectedRoute } from './components/auth/protected-routes';
 import { ProductList } from './components/my-products/product-list';
 import MyProducts from './pages/my-products';
 import MyProductUpdate from './pages/my-product-update';
+import CreateProduct from './pages/create-product';
 
 export function App() {
   return (
@@ -25,6 +26,15 @@ export function App() {
         element={
           <ProtectedRoute>
             <MyProductUpdate />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/create-product"
+        element={
+          <ProtectedRoute>
+            <CreateProduct />
           </ProtectedRoute>
         }
       />

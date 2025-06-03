@@ -106,3 +106,34 @@ export const GET_PRODUCT = gql`
     }
   }
 `;
+
+export const CREATE_PRODUCT_STEP = gql`
+  mutation CreateProductStep($step: Int!, $formData: ProductFormInput!) {
+    createProductStep(step: $step, formData: $formData) {
+      step
+      totalSteps
+      formData {
+        title
+        categories
+        description
+        price
+        rentPrice
+        rentPeriod
+      }
+    }
+  }
+`;
+
+export const SUBMIT_PRODUCT_FORM = gql`
+  mutation SubmitProductForm {
+    submitProductForm {
+      id
+      title
+      description
+      price
+      rentPrice
+      rentPeriod
+      categories
+    }
+  }
+`;
