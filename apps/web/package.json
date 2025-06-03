@@ -17,6 +17,7 @@
     "@mantine/modals": "^8.0.2",
     "@mantine/notifications": "^8.0.2",
     "@tabler/icons-react": "^3.33.0",
+    "date-fns": "^4.1.0",
     "graphql": "^16.11.0",
     "mantine-form-zod-resolver": "^1.2.1",
     "react": "^18.0.0",

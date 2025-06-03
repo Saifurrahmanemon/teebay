@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import { LoginPage } from './pages/login';
 import { RegisterPage } from './pages/register';
 import { ProtectedRoute } from './components/auth/protected-routes';
-import { HomePage } from './components/home/home-page';
+import { ProductList } from './components/my-products/product-list';
 
 export function App() {
   return (
@@ -13,7 +13,7 @@ export function App() {
         path="/"
         element={
           <ProtectedRoute>
-            <HomePage />
+            <ProductList />
           </ProtectedRoute>
         }
       />
