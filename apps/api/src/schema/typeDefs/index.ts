@@ -13,8 +13,7 @@ export const typeDefs = `
     DAILY
     WEEKLY
     MONTHLY
-  } 
-
+  }
 
   type User {
     id: Int!
@@ -38,7 +37,7 @@ export const typeDefs = `
     description: String!
     price: Float!
     rentPrice: Float!
-    rentPeriod:  RentPeriod!
+    rentPeriod: RentPeriod!
     categories: [Category!]!
     user: User!
     sales: [Sale!]!
@@ -73,11 +72,11 @@ export const typeDefs = `
   }
 
   type ProductFormSession {
-  step: Int  
-  totalSteps: Int    
-  formData: ProductFormData!  
+    step: Int
+    totalSteps: Int
+    formData: ProductFormData!
   }
-    
+
   type ProductFormData {
     title: String
     categories: [Category!]
@@ -86,8 +85,6 @@ export const typeDefs = `
     rentPrice: Float
     rentPeriod: RentPeriod
   }
-
-
 
   type Query {
     me: User
@@ -109,24 +106,42 @@ export const typeDefs = `
       address: String
     ): AuthPayload!
 
-    login(email: String!, password: String!): AuthPayload!
+    login(
+      email: String!
+      password: String!
+    ): AuthPayload!
 
-    createProductStep(step: Int!, formData: ProductFormInput!): ProductFormSession!
+    createProductStep(
+      step: Int!
+      formData: ProductFormInput!
+    ): ProductFormSession!
+
     submitProductForm: Product!
-  }
-    input ProductFormInput {
-     title: String
-     categories: [Category!]
-     description: String
-     price: Float
-     rentPrice: Float
-     rentPeriod: RentPeriod
-    }
+    deleteProduct(id: Int!): Boolean!
 
-    type TransactionHistory {
-     purchases: [Sale!]!
-     sales: [Sale!]!
-     rentalsOut: [Rental!]!
-     rentalsIn: [Rental!]!
-    }
+    updateProduct(
+      id: Int!
+      title: String
+      description: String
+      price: Float
+      rentPrice: Float
+      categories: [Category!]
+    ): Product!
+  }
+
+  input ProductFormInput {
+    title: String
+    categories: [Category!]
+    description: String
+    price: Float
+    rentPrice: Float
+    rentPeriod: RentPeriod
+  }
+
+  type TransactionHistory {
+    purchases: [Sale!]!
+    sales: [Sale!]!
+    rentalsOut: [Rental!]!
+    rentalsIn: [Rental!]!
+  }
 `;

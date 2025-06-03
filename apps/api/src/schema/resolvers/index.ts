@@ -9,6 +9,7 @@ import {
   ValidationError,
 } from '../../utils/errors.js';
 import {
+  ProductSchema,
   validateCompleteProduct,
   validateProductResponse,
   validateProductStep,
@@ -234,6 +235,62 @@ export const resolvers = {
           logger.error('submitProductForm failed', { error });
           throw new InternalServerError('Could not create product');
         }
+      },
+    ),
+
+    updateProduct: logResolver(
+      'Mutation.updateProduct',
+      async (_: any, { id, ...updates }: any, { prisma, userId }: Context) => {
+        if (!userId) throw new AuthenticationError();
+
+        const existingProduct = await prisma.product.findUnique({
+          where: { id },
+        });
+
+        if (!existingProduct) throw new NotFoundError('Product');
+        if (existingProduct.userId !== parseInt(userId)) {
+          throw new AuthenticationError('Not authorized to edit this product');
+        }
+
+        try {
+          ProductSchema.partial().parse(updates);
+        } catch (err) {
+          throw err;
+        }
+
+        return prisma.product.update({
+          where: { id },
+          data: {
+            ...updates,
+          },
+          include: {
+            user: true,
+          },
+        });
+      },
+    ),
+
+    deleteProduct: logResolver(
+      'Mutation.deleteProduct',
+      async (_: any, { id }: any, { prisma, userId }: Context) => {
+        if (!userId) throw new AuthenticationError();
+
+        const existingProduct = await prisma.product.findUnique({
+          where: { id },
+        });
+
+        if (!existingProduct) throw new NotFoundError('Product');
+        if (existingProduct.userId !== parseInt(userId)) {
+          throw new AuthenticationError('Not authorized to delete this product');
+        }
+
+        // Soft delete
+        await prisma.product.update({
+          where: { id },
+          data: { isDeleted: true, isAvailable: false },
+        });
+
+        return true;
       },
     ),
   },
