@@ -3,6 +3,8 @@ import { LoginPage } from './pages/login';
 import { RegisterPage } from './pages/register';
 import { ProtectedRoute } from './components/auth/protected-routes';
 import { ProductList } from './components/my-products/product-list';
+import MyProducts from './pages/my-products';
+import MyProductUpdate from './pages/my-product-update';
 
 export function App() {
   return (
@@ -13,7 +15,16 @@ export function App() {
         path="/"
         element={
           <ProtectedRoute>
-            <ProductList />
+            <MyProducts />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/product/:id"
+        element={
+          <ProtectedRoute>
+            <MyProductUpdate />
           </ProtectedRoute>
         }
       />

@@ -56,6 +56,14 @@ export const resolvers = {
       },
     ),
 
+    getProduct: logResolver(
+      'Query.getProduct',
+      async (_: any, { id }: any, { prisma }: Context) => {
+        const product = await prisma.product.findUnique({ where: { id: Number(id) } });
+        return product;
+      },
+    ),
+
     getAvailableProducts: logResolver(
       'Query.getAvailableProducts',
       async (_: any, __: any, { prisma }: Context) => {
@@ -243,6 +251,8 @@ export const resolvers = {
       async (_: any, { id, ...updates }: any, { prisma, userId }: Context) => {
         if (!userId) throw new AuthenticationError();
 
+        console.log('id', id);
+
         const existingProduct = await prisma.product.findUnique({
           where: { id },
         });
@@ -291,6 +301,82 @@ export const resolvers = {
         });
 
         return true;
+      },
+    ),
+
+    buyProduct: logResolver(
+      'Mutation.buyProduct',
+      async (_: any, { productId }: any, { prisma, userId }: Context) => {
+        if (!userId) throw new AuthenticationError();
+
+        const product = await prisma.product.findUnique({
+          where: { id: productId, isDeleted: false, isAvailable: true },
+        });
+
+        if (!product) throw new NotFoundError('Product');
+        if (product.userId === parseInt(userId)) {
+          throw new ValidationError('Cannot buy your own product');
+        }
+
+        const sale = await prisma.$transaction([
+          prisma.sale.create({
+            data: {
+              productId,
+              buyerId: parseInt(userId),
+              sellerId: product.userId,
+            },
+          }),
+          prisma.product.update({
+            where: { id: productId },
+            data: { isAvailable: false },
+          }),
+        ]);
+
+        return sale[0];
+      },
+    ),
+
+    rentProduct: logResolver(
+      'Mutation.rentProduct',
+      async (_: any, { productId, fromDate, toDate }: any, { prisma, userId }: Context) => {
+        if (!userId) throw new AuthenticationError();
+
+        const product = await prisma.product.findUnique({
+          where: { id: productId, isDeleted: false, isAvailable: true },
+        });
+
+        if (!product) throw new NotFoundError('Product');
+        if (product.userId === parseInt(userId)) {
+          throw new ValidationError('Cannot rent your own product');
+        }
+
+        // Check for date conflicts
+        const conflictingRentals = await prisma.rental.findMany({
+          where: {
+            productId,
+            OR: [
+              {
+                fromDate: { lte: new Date(toDate) },
+                toDate: { gte: new Date(fromDate) },
+              },
+            ],
+          },
+        });
+
+        if (conflictingRentals.length > 0) {
+          throw new ValidationError('Product is not available for the selected dates');
+        }
+
+        // Create rental
+        return prisma.rental.create({
+          data: {
+            productId,
+            lenderId: product.userId,
+            borrowerId: parseInt(userId),
+            fromDate: new Date(fromDate),
+            toDate: new Date(toDate),
+          },
+        });
       },
     ),
   },

@@ -94,6 +94,7 @@ export const typeDefs = `
     getProductFormState(id: ID): ProductFormSession!
     getAvailableProducts: [Product!]!
     getMyTransactions: TransactionHistory!
+    getProduct(id: ID):Product!
   }
 
   type Mutation {
@@ -125,8 +126,12 @@ export const typeDefs = `
       description: String
       price: Float
       rentPrice: Float
+      rentPeriod:RentPeriod
       categories: [Category!]
     ): Product!
+
+    buyProduct(productId: Int!): Sale!
+    rentProduct(productId: Int!, fromDate: String!, toDate: String!): Rental!
   }
 
   input ProductFormInput {

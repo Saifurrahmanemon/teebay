@@ -60,3 +60,49 @@ export const BUY_PRODUCT = gql`
     }
   }
 `;
+
+export const UPDATE_PRODUCT = gql`
+  mutation UpdateProduct(
+    $id: Int!
+    $title: String
+    $description: String
+    $price: Float
+    $rentPrice: Float
+    $rentPeriod: RentPeriod
+    $categories: [Category!]
+  ) {
+    updateProduct(
+      id: $id
+      title: $title
+      description: $description
+      price: $price
+      rentPrice: $rentPrice
+      rentPeriod: $rentPeriod
+      categories: $categories
+    ) {
+      id
+      title
+      description
+      price
+      rentPrice
+      rentPeriod
+      categories
+    }
+  }
+`;
+
+export const GET_PRODUCT = gql`
+  query GetProduct($id: ID!) {
+    getProduct(id: $id) {
+      id
+      title
+      description
+      price
+      rentPrice
+      rentPeriod
+      categories
+      createdAt
+      isAvailable
+    }
+  }
+`;

@@ -8,6 +8,15 @@ export type Category =
   | 'OUTDOOR'
   | 'TOYS';
 
+export enum CategoryName {
+  ELECTRONICS = 'ELECTRONICS',
+  FURNITURE = 'FURNITURE',
+  HOME_APPLIANCES = 'HOME_APPLIANCES',
+  OUTDOOR = 'OUTDOOR',
+  TOYS = 'TOYS',
+  SPORTING_GOODS = 'SPORTING_GOODS',
+}
+
 export type RentPeriod = 'HOURLY' | 'DAILY' | 'WEEKLY' | 'MONTHLY';
 
 export interface User {

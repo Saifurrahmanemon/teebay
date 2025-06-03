@@ -34,6 +34,7 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   const [deleteOpened, { open: openDelete, close: closeDelete }] = useDisclosure(false);
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const datePosted = formatTimestampWithOrdinal(Number(product?.createdAt));
 
@@ -62,7 +63,13 @@ export function ProductCard({ product }: ProductCardProps) {
           </Text>
           <Group gap="xs">
             <Tooltip label="Edit">
-              <ActionIcon variant="light" color="blue" onClick={() => {}}>
+              <ActionIcon
+                variant="light"
+                color="blue"
+                onClick={() => {
+                  navigate(`/product/${product.id}`);
+                }}
+              >
                 <IconEdit size={18} />
               </ActionIcon>
             </Tooltip>
