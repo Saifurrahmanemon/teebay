@@ -10,7 +10,6 @@ import {
 } from '../../utils/errors.js';
 import {
   validateCompleteProduct,
-  validateProductFormSession,
   validateProductResponse,
   validateProductStep,
 } from '@teebay/validations';
@@ -50,6 +49,7 @@ export const resolvers = {
         where: { userId: parseInt(userId), isDeleted: false },
         include: { user: true },
       });
+
       return products.map((product: any) => validateProductResponse(product));
     },
 
