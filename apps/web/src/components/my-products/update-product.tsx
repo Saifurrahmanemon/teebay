@@ -1,6 +1,6 @@
-// src/components/products/UpdateProductModal.tsx
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import {
-  Modal,
   Stack,
   TextInput,
   MultiSelect,
@@ -15,13 +15,14 @@ import {
 import { useForm } from '@mantine/form';
 import { zodResolver } from 'mantine-form-zod-resolver';
 import { useMutation, useQuery } from '@apollo/client';
-import { GET_PRODUCT, UPDATE_PRODUCT } from '@/graphql/products';
 import { notifications } from '@mantine/notifications';
 import { ProductSchema } from '@teebay/validations';
 import { useEffect } from 'react';
-import { CategoryName } from '@/types';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
+
+import { CategoryName } from '@/types';
+import { GET_PRODUCT, UPDATE_PRODUCT } from '@/graphql/products';
 const categories = [
   { value: CategoryName.ELECTRONICS, label: 'Electronics' },
   { value: CategoryName.FURNITURE, label: 'Furniture' },
@@ -48,7 +49,6 @@ export default function UpdateMyProduct({ productId }: { productId: string }) {
     validate: zodResolver(ProductSchema),
   });
 
-  // Update form values when product data is loaded
   useEffect(() => {
     if (data?.getProduct) {
       form.setValues({
@@ -60,6 +60,8 @@ export default function UpdateMyProduct({ productId }: { productId: string }) {
         categories: data.getProduct.categories,
       });
     }
+
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, [data]);
 
   const [updateProduct, { loading: mutationLoading }] = useMutation(UPDATE_PRODUCT, {
@@ -85,7 +87,7 @@ export default function UpdateMyProduct({ productId }: { productId: string }) {
     try {
       // Validate the input values against the ProductSchema
       const validatedData = ProductSchema.parse(values);
-      
+
       updateProduct({
         variables: {
           id: Number(productId),
@@ -101,7 +103,7 @@ export default function UpdateMyProduct({ productId }: { productId: string }) {
           fieldErrors[path] = err.message;
         });
         form.setErrors(fieldErrors);
-        
+
         notifications.show({
           title: 'Validation Error',
           message: 'Please fix the form errors',
@@ -116,7 +118,6 @@ export default function UpdateMyProduct({ productId }: { productId: string }) {
       }
     }
   };
-
 
   return (
     <Container my={20}>

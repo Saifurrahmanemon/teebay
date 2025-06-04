@@ -1,19 +1,16 @@
-import type { Context } from '../../lib/context.js';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import bcrypt from 'bcrypt';
+import { ProductSchema, validateCompleteProduct, validateProductStep } from '@teebay/validations';
+
+import type { Context } from '../../lib/context.js';
 import { generateToken } from '../../utils/auth.js';
 import {
   AuthenticationError,
-  BaseError,
   InternalServerError,
   NotFoundError,
   ValidationError,
 } from '../../utils/errors.js';
-import {
-  ProductSchema,
-  validateCompleteProduct,
-  validateProductResponse,
-  validateProductStep,
-} from '@teebay/validations';
 import { logResolver } from '../../utils/logResolver.js';
 import logger from '../../utils/loggers.js';
 
@@ -290,11 +287,7 @@ export const resolvers = {
           throw new AuthenticationError('Not authorized to edit this product');
         }
 
-        try {
-          ProductSchema.partial().parse(updates);
-        } catch (err) {
-          throw err;
-        }
+        ProductSchema.partial().parse(updates);
 
         return prisma.product.update({
           where: { id },

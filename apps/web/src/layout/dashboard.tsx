@@ -1,16 +1,13 @@
 import {
   AppShell,
-  AppShellHeader,
   Text,
   Group,
   Button,
   Anchor,
-  Avatar,
   Menu,
   Divider,
-  Box,
 } from '@mantine/core';
-import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   IconShoppingCart,
   IconList,
@@ -19,11 +16,12 @@ import {
   IconSettings,
   IconUserCircle,
 } from '@tabler/icons-react';
-import { useAuth } from '@/context/auth-context';
 import { notifications } from '@mantine/notifications';
 import { useQuery } from '@apollo/client';
-import { GET_CURRENT_USER } from '@/graphql/auth';
 import { ReactElement } from 'react';
+
+import { GET_CURRENT_USER } from '@/graphql/auth';
+import { useAuth } from '@/context/auth-context';
 
 export function DashboardLayout({ children }: { children: ReactElement }) {
   const { user: authUser, logout } = useAuth();
@@ -87,7 +85,7 @@ export function DashboardLayout({ children }: { children: ReactElement }) {
         </AppShell.Section>
 
         <AppShell.Section>
-              <Divider mb="sm" />
+          <Divider mb="sm" />
           <Button
             onClick={handleLogout}
             variant="subtle"
@@ -115,7 +113,6 @@ export function DashboardLayout({ children }: { children: ReactElement }) {
                 <Button variant="light" leftSection={<IconUserCircle size={16} />}>
                   <Group gap="xs">
                     <Text>{user.firstName}</Text>
-
                   </Group>
                 </Button>
               </Menu.Target>
@@ -124,9 +121,7 @@ export function DashboardLayout({ children }: { children: ReactElement }) {
                 <Menu.Item leftSection={<IconUser size={14} />}>
                   {user.firstName} {user.lastName}
                 </Menu.Item>
-                <Menu.Item leftSection={<IconSettings size={14} />}>
-                  {user.email}
-                </Menu.Item>
+                <Menu.Item leftSection={<IconSettings size={14} />}>{user.email}</Menu.Item>
                 {user.phone && (
                   <Menu.Item leftSection={<IconSettings size={14} />}>
                     Phone: {user.phone}
@@ -134,7 +129,7 @@ export function DashboardLayout({ children }: { children: ReactElement }) {
                 )}
                 <Menu.Divider />
                 <Menu.Label>Account</Menu.Label>
-         
+
                 <Menu.Item
                   color="red"
                   leftSection={<IconLogout size={14} />}

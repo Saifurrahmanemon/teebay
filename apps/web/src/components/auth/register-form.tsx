@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { useForm } from '@mantine/form';
 import { useMutation } from '@apollo/client';
-import { REGISTER_MUTATION } from '@/graphql/auth';
 import {
   TextInput,
   PasswordInput,
@@ -16,11 +17,13 @@ import {
   LoadingOverlay,
 } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/context/auth-context';
 import { notifications } from '@mantine/notifications';
 import { IconAt, IconLock, IconUser, IconPhone, IconHome } from '@tabler/icons-react';
 import { zodResolver } from 'mantine-form-zod-resolver';
 import { registerSchema } from '@teebay/validations';
+
+import { useAuth } from '@/context/auth-context';
+import { REGISTER_MUTATION } from '@/graphql/auth';
 
 export function RegisterForm() {
   const { login } = useAuth();
@@ -62,8 +65,10 @@ export function RegisterForm() {
     },
   });
 
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   const handleSubmit = (values: any) => {
     const { confirmPassword, ...submitValues } = values;
+
     registerMutation({
       variables: submitValues,
     });

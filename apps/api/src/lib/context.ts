@@ -1,4 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { verifyToken } from '../utils/auth';
+import logger from '../utils/loggers';
+
 import { prisma } from './prisma';
 
 export interface Context {
@@ -13,8 +17,8 @@ export const createContext = ({ req }: any): Context => {
     try {
       const payload = verifyToken(token);
       userId = payload.userId;
-    } catch (e) {
-      console.warn('Invalid token');
+    } catch (err) {
+      logger.warn('Invalid token', err);
     }
   }
 

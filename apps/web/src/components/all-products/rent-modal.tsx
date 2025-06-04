@@ -1,16 +1,16 @@
 // src/components/products/RentProductModal.tsx
 import { Modal, Group, Button, Stack, Text, NumberInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { zodResolver } from 'mantine-form-zod-resolver';
 import { useMutation } from '@apollo/client';
-import { GET_MY_TRANSACTIONS, RENT_PRODUCT } from '@/graphql/products';
 import { notifications } from '@mantine/notifications';
 import { IconCalendar } from '@tabler/icons-react';
 import { DatePickerInput } from '@mantine/dates';
-import { Product } from '@/types';
 import { useEffect, useState } from 'react';
-import { calculateRentalTotal } from '@/utils/calculate-total-rent';
 import { useNavigate } from 'react-router-dom';
+
+import { Product } from '@/types';
+import { calculateRentalTotal } from '@/utils/calculate-total-rent';
+import { GET_MY_TRANSACTIONS, RENT_PRODUCT } from '@/graphql/products';
 
 interface RentProductModalProps {
   opened: boolean;
@@ -28,7 +28,7 @@ export function RentProductModal({ opened, onClose, product }: RentProductModalP
     },
   });
 
-  const [rentProduct, { loading, data }] = useMutation(RENT_PRODUCT, {
+  const [rentProduct, { loading }] = useMutation(RENT_PRODUCT, {
     onCompleted: () => {
       notifications.show({
         title: 'Success',
@@ -52,7 +52,9 @@ export function RentProductModal({ opened, onClose, product }: RentProductModalP
   });
 
   useEffect(() => {
-    const { fromDate, toDate } = form.values;
+    const fromDate = form.values.fromDate;
+    const toDate = form.values.toDate;
+
     if (fromDate && toDate) {
       const cost = calculateRentalTotal(fromDate, toDate, product.rentPrice, product.rentPeriod);
       setTotalCost(cost);
@@ -60,11 +62,6 @@ export function RentProductModal({ opened, onClose, product }: RentProductModalP
       setTotalCost(0);
     }
   }, [form.values.fromDate, form.values.toDate, product.rentPeriod, product.rentPrice]);
-
-  const parseDateString = (dateStr: Date | string): Date => {
-    if (dateStr instanceof Date) return dateStr;
-    return new Date(dateStr);
-  };
 
   const handleSubmit = (values: { fromDate: Date | null; toDate: Date | null }) => {
     if (!values.fromDate || !values.toDate) {

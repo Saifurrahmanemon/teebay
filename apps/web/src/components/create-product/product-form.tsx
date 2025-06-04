@@ -18,7 +18,6 @@ import {
   Badge,
 } from '@mantine/core';
 import { useMutation } from '@apollo/client';
-import { CREATE_PRODUCT_STEP, SUBMIT_PRODUCT_FORM } from '@/graphql/products';
 import { notifications } from '@mantine/notifications';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -28,6 +27,8 @@ import {
   ProductPricingStepSchema,
   ProductSchema,
 } from '@teebay/validations';
+
+import { CREATE_PRODUCT_STEP, SUBMIT_PRODUCT_FORM } from '@/graphql/products';
 
 const categories = [
   { value: 'ELECTRONICS', label: 'Electronics' },
@@ -45,12 +46,12 @@ const rentPeriods = [
   { value: 'MONTHLY', label: 'Monthly' },
 ];
 
-export function ProductForm({ initialData }: { initialData?: any }) {
+export function ProductForm() {
   const [active, setActive] = useState(0);
   const navigate = useNavigate();
 
   const form = useForm({
-    initialValues: initialData || {
+    initialValues: {
       title: '',
       categories: [],
       description: '',

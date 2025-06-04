@@ -2,6 +2,7 @@ import express from 'express';
 import { createYoga } from 'graphql-yoga';
 import cors from 'cors';
 import dotenv from 'dotenv';
+
 import { schema } from './schema/index';
 import { createContext } from './lib/context';
 
@@ -10,10 +11,8 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 4000;
 
-// CORS middleware
 app.use(cors());
 
-// Create GraphQL Yoga instance
 const yoga = createYoga({
   schema,
   context: createContext,
@@ -23,16 +22,12 @@ const yoga = createYoga({
   graphqlEndpoint: '/graphql',
   logging: 'debug',
   maskedErrors: false,
-  plugins: [
-    {
-      onRequest: ({ request }) => {},
-    },
-  ],
+  plugins: [],
 });
 
 app.use('/graphql', yoga);
 
-app.get('/health', (req, res) => {
+app.get('/health', (_, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 

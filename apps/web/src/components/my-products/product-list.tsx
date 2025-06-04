@@ -1,8 +1,7 @@
-// src/components/products/ProductList.tsx
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { useQuery } from '@apollo/client';
-import { GET_PRODUCTS_BY_USER, GET_AVAILABLE_PRODUCTS } from '@/graphql/products';
 import {
-  SimpleGrid,
   Skeleton,
   Title,
   Container,
@@ -13,9 +12,12 @@ import {
   Divider,
   Text,
 } from '@mantine/core';
-import { useAuth } from '@/context/auth-context';
-import { ProductCard } from './product-card';
 import { useNavigate } from 'react-router-dom';
+
+import { ProductCard } from './product-card';
+
+import { GET_PRODUCTS_BY_USER } from '@/graphql/products';
+import { useAuth } from '@/context/auth-context';
 
 export const ProductListLoading = () => (
   <Stack my="lg">
@@ -55,7 +57,7 @@ export function ProductList() {
         <Center mt="xl">
           <Stack align="center">
             <Text c="dimmed" size="lg">
-              You haven't listed any products yet.
+              You haven&apos;t listed any products yet.
             </Text>
           </Stack>
         </Center>

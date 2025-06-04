@@ -1,7 +1,8 @@
-import UpdateMyProduct from '@/components/my-products/update-product';
 import { Container } from '@mantine/core';
 import React from 'react';
 import { useParams } from 'react-router-dom';
+
+import UpdateMyProduct from '@/components/my-products/update-product';
 
 function MyProductUpdate() {
   const { id } = useParams();

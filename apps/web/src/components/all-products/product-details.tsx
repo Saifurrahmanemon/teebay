@@ -1,4 +1,3 @@
-import { GET_PRODUCT } from '@/graphql/products';
 import { useQuery } from '@apollo/client';
 import {
   Badge,
@@ -13,8 +12,11 @@ import {
   Title,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+
 import { RentProductModal } from './rent-modal';
 import { BuyProductModal } from './buy-modal';
+
+import { GET_PRODUCT } from '@/graphql/products';
 
 function ProductDetailsComponent({ productId }: { productId: string }) {
   const [rentOpened, { open: openRent, close: closeRent }] = useDisclosure(false);

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import logger from './loggers';
 
 export function logResolver<TArgs = any, TContext = any, TResult = any>(

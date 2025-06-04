@@ -3,7 +3,9 @@ import { createTheme, MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import { ModalsProvider } from '@mantine/modals';
 import { BrowserRouter } from 'react-router-dom';
+
 import { client } from '../api/client';
+
 import { AuthProvider } from '@/context/auth-context';
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';

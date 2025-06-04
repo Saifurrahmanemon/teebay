@@ -1,6 +1,5 @@
 import { useForm } from '@mantine/form';
 import { useMutation } from '@apollo/client';
-import { LOGIN_MUTATION } from '@/graphql/auth';
 import { zodResolver } from 'mantine-form-zod-resolver';
 import {
   TextInput,
@@ -13,16 +12,15 @@ import {
   Card,
   Flex,
   Box,
-  Image,
-  rem,
   Group,
-  Divider,
 } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/context/auth-context';
 import { notifications } from '@mantine/notifications';
-import { IconAt, IconLock, IconBrandGoogle, IconBrandGithub } from '@tabler/icons-react';
+import { IconAt, IconLock } from '@tabler/icons-react';
 import { loginSchema } from '@teebay/validations';
+
+import { useAuth } from '@/context/auth-context';
+import { LOGIN_MUTATION } from '@/graphql/auth';
 
 export function LoginForm() {
   const { login } = useAuth();
@@ -58,7 +56,7 @@ export function LoginForm() {
     },
   });
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = (values: { email: string; password: string }) => {
     loginMutation({
       variables: {
         email: values.email,
@@ -122,7 +120,7 @@ export function LoginForm() {
         </form>
 
         <Text ta="center" mt="xl" c="dimmed" size="sm">
-          Don't have an account?{' '}
+          Don&apos;t have an account?{' '}
           <Anchor component="button" type="button" fw={600} onClick={() => navigate('/register')}>
             Create account
           </Anchor>

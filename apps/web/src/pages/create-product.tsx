@@ -1,5 +1,6 @@
-import { ProductForm } from '@/components/create-product/product-form';
 import { Container } from '@mantine/core';
+
+import { ProductForm } from '@/components/create-product/product-form';
 
 function CreateProduct() {
   return (

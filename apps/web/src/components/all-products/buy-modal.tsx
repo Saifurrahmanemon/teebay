@@ -1,8 +1,9 @@
 import { Modal, Group, Button, Stack, Text } from '@mantine/core';
 import { useMutation } from '@apollo/client';
-import { BUY_PRODUCT } from '@/graphql/products';
 import { notifications } from '@mantine/notifications';
 import { useNavigate } from 'react-router-dom';
+
+import { BUY_PRODUCT } from '@/graphql/products';
 import { Product } from '@/types';
 
 interface BuyProductModalProps {

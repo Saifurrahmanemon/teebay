@@ -6,6 +6,7 @@ import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import importPlugin from 'eslint-plugin-import';
 import unusedImports from 'eslint-plugin-unused-imports';
 import prettier from 'eslint-config-prettier';
+import globals from 'globals';
 
 /** @type {import("eslint").Linter.FlatConfig[]} */
 export default [
@@ -41,6 +42,8 @@ export default [
     languageOptions: {
       globals: {
         React: 'writable',
+        ...globals.node,
+        ...globals.browser,
       },
     },
     rules: {

@@ -1,8 +1,5 @@
 import { gql } from '@apollo/client';
 
-
-
-
 export const GET_CURRENT_USER = gql`
   query GetCurrentUser {
     me {
@@ -17,7 +14,6 @@ export const GET_CURRENT_USER = gql`
     }
   }
 `;
-
 
 export const LOGIN_MUTATION = gql`
   mutation Login($email: String!, $password: String!) {

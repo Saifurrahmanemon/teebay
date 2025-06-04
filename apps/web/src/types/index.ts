@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 // TODO: move types to a separate package
 
 export type Category =

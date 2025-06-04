@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client';
-import { GET_MY_TRANSACTIONS } from '@/graphql/products';
 import {
   Table,
   Badge,
@@ -13,6 +12,8 @@ import {
   Container,
 } from '@mantine/core';
 import { IconShoppingCart, IconExchange, IconAlertCircle } from '@tabler/icons-react';
+
+import { GET_MY_TRANSACTIONS } from '@/graphql/products';
 import { formatTimestampWithOrdinal } from '@/utils/dates';
 import { calculateRentalTotal } from '@/utils/calculate-total-rent';
 
@@ -104,7 +105,7 @@ export function TransactionsPanel() {
     </div>
   );
 }
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 function TransactionTable({
   data,
   type,
@@ -117,11 +118,7 @@ function TransactionTable({
   if (data?.length === 0) {
     return (
       <Container my={20}>
-        <Alert
-          icon={<IconAlertCircle size={16} />}
-          color="red"
-          closeButtonLabel="Close alert"
-        >
+        <Alert icon={<IconAlertCircle size={16} />} color="red" closeButtonLabel="Close alert">
           No {type.replace(/([A-Z])/g, ' $1').toLowerCase()} found
         </Alert>
       </Container>

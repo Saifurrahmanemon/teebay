@@ -13,18 +13,16 @@ import {
 import {
   IconTrash,
   IconEdit,
-  IconShoppingCart,
   IconCalendar,
-  IconCurrencyDollar,
   IconClockHour4,
 } from '@tabler/icons-react';
 import { useDisclosure } from '@mantine/hooks';
-import { useAuth } from '@/context/auth-context';
 import { useNavigate } from 'react-router-dom';
-import { Product } from '@/types';
-import { formatTimestampWithOrdinal } from '@/utils/dates';
 import { notifications } from '@mantine/notifications';
 import { useMutation } from '@apollo/client';
+
+import { Product } from '@/types';
+import { formatTimestampWithOrdinal } from '@/utils/dates';
 import { DELETE_PRODUCT } from '@/graphql/products';
 
 interface ProductCardProps {

@@ -1,7 +1,8 @@
-import ProductDetailsComponent from '@/components/all-products/product-details';
 import { Container } from '@mantine/core';
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+
+import ProductDetailsComponent from '@/components/all-products/product-details';
 
 function ProductDetails() {
   const { id } = useParams();

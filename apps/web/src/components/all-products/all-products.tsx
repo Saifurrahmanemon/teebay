@@ -1,9 +1,11 @@
-import { GET_AVAILABLE_PRODUCTS } from '@/graphql/products';
 import { useQuery } from '@apollo/client';
-import { Title, Container, Stack, Button, Center, Flex, Divider, Text } from '@mantine/core';
+import { Title, Container, Stack, Center, Flex, Divider, Text } from '@mantine/core';
+import { Link } from 'react-router-dom';
+
 import { ProductListLoading } from '../my-products/product-list';
 import { ProductCard } from '../my-products/product-card';
-import { Link } from 'react-router-dom';
+
+import { GET_AVAILABLE_PRODUCTS } from '@/graphql/products';
 import { Product } from '@/types';
 
 function ProductListing() {
@@ -27,6 +29,7 @@ function ProductListing() {
           <Stack my="lg">
             {availableProductsData?.getAvailableProducts.map((product: Product) => (
               <Link
+                key={product?.id}
                 style={{
                   cursor: 'pointer',
                 }}
@@ -40,7 +43,7 @@ function ProductListing() {
           <Center mt="xl">
             <Stack align="center">
               <Text c="dimmed" size="lg">
-                You haven't listed any products yet.
+                You haven&apos;t listed any products yet.
               </Text>
             </Stack>
           </Center>
