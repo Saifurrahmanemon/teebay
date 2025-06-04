@@ -4,6 +4,10 @@ Welcome to the **Teebay** monorepo! This repository contains all the source code
 
 ---
 
+
+https://github.com/user-attachments/assets/e841c35b-7d80-4f01-9096-75f175beec60
+
+
 ## Table of Contents
 
 - [Monorepo Structure](#monorepo-structure)
@@ -41,6 +45,10 @@ teebay-monorepo/
 ```
 
 ---
+
+
+
+
 
 ## Apps
 
