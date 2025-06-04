@@ -50,6 +50,9 @@ export const resolvers = {
         const products = await prisma.product.findMany({
           where: { userId: parseInt(userId), isDeleted: false },
           include: { user: true },
+          orderBy: {
+            createdAt: 'desc',
+          },
         });
 
         return products;
@@ -70,6 +73,9 @@ export const resolvers = {
         const products = prisma.product.findMany({
           where: { isDeleted: false, isAvailable: true },
           include: { user: true },
+          orderBy: {
+            createdAt: 'desc',
+          },
         });
         return products;
       },
