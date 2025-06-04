@@ -6,10 +6,17 @@
     "packages/*"
   ],
   "scripts": {
+    "build": "turbo check-types build",
+    "dev": "turbo dev",
     "dev:web": "turbo run dev --filter=web",
     "dev:api": "turbo run dev --filter=api",
     "lint": "turbo run lint",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "migrate:dev": "pnpm --filter api migrate:dev",
+    "migrate:deploy": "pnpm --filter api migrate:deploy",
+    "migrate:reset": "pnpm --filter api migrate:reset",
+    "prisma:studio": "pnpm --filter api prisma:studio",
+    "prisma:generate": "pnpm --filter api prisma:generate"
   },
   "devDependencies": {
     "@types/node": "^22.15.29",
