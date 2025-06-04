@@ -367,8 +367,7 @@ export const resolvers = {
           throw new ValidationError('Product is not available for the selected dates');
         }
 
-        // Create rental
-        return prisma.rental.create({
+        const result = await prisma.rental.create({
           data: {
             productId,
             lenderId: product.userId,
@@ -377,6 +376,8 @@ export const resolvers = {
             toDate: new Date(toDate),
           },
         });
+
+        return result;
       },
     ),
   },

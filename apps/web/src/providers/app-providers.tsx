@@ -7,6 +7,7 @@ import { client } from '../api/client';
 import { AuthProvider } from '@/context/auth-context';
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
+import '@mantine/dates/styles.css';
 import '../global.css';
 
 const theme = createTheme({

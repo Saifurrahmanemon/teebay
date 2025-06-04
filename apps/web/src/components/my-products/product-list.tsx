@@ -13,17 +13,16 @@ import {
   Divider,
   Text,
 } from '@mantine/core';
-import { IconPlus } from '@tabler/icons-react';
 import { useAuth } from '@/context/auth-context';
 import { ProductCard } from './product-card';
 import { useNavigate } from 'react-router-dom';
 
-const ProductListLoading = () => (
-  <SimpleGrid cols={{ base: 1, sm: 1, md: 2 }} spacing="lg">
+export const ProductListLoading = () => (
+  <Stack my="lg">
     {Array.from({ length: 4 }).map((_, i) => (
       <Skeleton key={i} height={300} radius="md" />
     ))}
-  </SimpleGrid>
+  </Stack>
 );
 
 export function ProductList() {
@@ -49,7 +48,7 @@ export function ProductList() {
       ) : products.length > 0 ? (
         <Stack my="lg">
           {products.map((product: any) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product.id} product={product} isOwner />
           ))}
         </Stack>
       ) : (

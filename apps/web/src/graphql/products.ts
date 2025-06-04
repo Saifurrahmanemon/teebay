@@ -137,3 +137,15 @@ export const SUBMIT_PRODUCT_FORM = gql`
     }
   }
 `;
+
+
+
+export const RENT_PRODUCT = gql`
+  mutation RentProduct($productId: Int!, $fromDate: String!, $toDate: String!) {
+    rentProduct(productId: $productId, fromDate: $fromDate, toDate: $toDate) {
+      id
+      fromDate
+      toDate
+    }
+  }
+`;

@@ -29,11 +29,11 @@ import { DELETE_PRODUCT } from '@/graphql/products';
 
 interface ProductCardProps {
   product: Product;
+  isOwner?: boolean;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product, isOwner = false }: ProductCardProps) {
   const [deleteOpened, { open: openDelete, close: closeDelete }] = useDisclosure(false);
-  const { user } = useAuth();
   const navigate = useNavigate();
 
   const datePosted = formatTimestampWithOrdinal(Number(product?.createdAt));
@@ -61,24 +61,26 @@ export function ProductCard({ product }: ProductCardProps) {
           <Text fw={600} size="lg">
             {product.title}
           </Text>
-          <Group gap="xs">
-            <Tooltip label="Edit">
-              <ActionIcon
-                variant="light"
-                color="blue"
-                onClick={() => {
-                  navigate(`/product/${product.id}`);
-                }}
-              >
-                <IconEdit size={18} />
-              </ActionIcon>
-            </Tooltip>
-            <Tooltip label="Delete">
-              <ActionIcon variant="light" color="red" onClick={openDelete}>
-                <IconTrash size={18} />
-              </ActionIcon>
-            </Tooltip>
-          </Group>
+          {isOwner && (
+            <Group gap="xs">
+              <Tooltip label="Edit">
+                <ActionIcon
+                  variant="light"
+                  color="blue"
+                  onClick={() => {
+                    navigate(`/product/${product.id}`);
+                  }}
+                >
+                  <IconEdit size={18} />
+                </ActionIcon>
+              </Tooltip>
+              <Tooltip label="Delete">
+                <ActionIcon variant="light" color="red" onClick={openDelete}>
+                  <IconTrash size={18} />
+                </ActionIcon>
+              </Tooltip>
+            </Group>
+          )}
         </Group>
 
         <Group gap="xs" mb="sm" wrap="wrap">
@@ -114,15 +116,6 @@ export function ProductCard({ product }: ProductCardProps) {
           <Text size="sm" c="dark">
             Posted: {datePosted}
           </Text>
-        </Group>
-
-        <Group justify="flex-end" gap="xs">
-          <Button variant="light" leftSection={<IconShoppingCart size={16} />} onClick={() => {}}>
-            Buy
-          </Button>
-          <Button variant="default" onClick={() => {}}>
-            Rent
-          </Button>
         </Group>
       </Card>
 

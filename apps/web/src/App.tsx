@@ -2,11 +2,12 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { LoginPage } from './pages/login';
 import { RegisterPage } from './pages/register';
 import { ProtectedRoute } from './components/auth/protected-routes';
-import { ProductList } from './components/my-products/product-list';
 import MyProducts from './pages/my-products';
 import MyProductUpdate from './pages/my-product-update';
 import CreateProduct from './pages/create-product';
 import { DashboardLayout } from './layout/dashboard';
+import AllProduct from './pages/all-products';
+import ProductDetails from './pages/product-details';
 
 export function App() {
   return (
@@ -26,10 +27,23 @@ export function App() {
       />
 
       <Route
+        path="/create-product"
+        element={
+          <ProtectedRoute>
+            <DashboardLayout>
+              <CreateProduct />
+            </DashboardLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
         path="/product/:id"
         element={
           <ProtectedRoute>
-            <MyProductUpdate />
+            <DashboardLayout>
+              <MyProductUpdate />
+            </DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -38,7 +52,31 @@ export function App() {
         path="/create-product"
         element={
           <ProtectedRoute>
-            <CreateProduct />
+            <DashboardLayout>
+              <CreateProduct />
+            </DashboardLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/products"
+        element={
+          <ProtectedRoute>
+            <DashboardLayout>
+              <AllProduct />
+            </DashboardLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/products/:id"
+        element={
+          <ProtectedRoute>
+            <DashboardLayout>
+              <ProductDetails />
+            </DashboardLayout>
           </ProtectedRoute>
         }
       />
