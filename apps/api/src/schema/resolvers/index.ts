@@ -3,16 +3,16 @@
 import bcrypt from 'bcrypt';
 import { ProductSchema, validateCompleteProduct, validateProductStep } from '@teebay/validations';
 
-import type { Context } from '../../lib/context.js';
-import { generateToken } from '../../utils/auth.js';
+import type { Context } from '../../lib/context';
+import { generateToken } from '../../utils/auth';
 import {
   AuthenticationError,
   InternalServerError,
   NotFoundError,
   ValidationError,
-} from '../../utils/errors.js';
-import { logResolver } from '../../utils/logResolver.js';
-import logger from '../../utils/loggers.js';
+} from '../../utils/errors';
+import { logResolver } from '../../utils/logResolver';
+import logger from '../../utils/loggers';
 
 export const resolvers = {
   Query: {

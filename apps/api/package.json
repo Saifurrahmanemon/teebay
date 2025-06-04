@@ -10,7 +10,10 @@
     "db:migrate": "prisma migrate dev",
     "db:generate": "prisma generate",
     "db:studio": "prisma studio",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@prisma/client": "^5.7.0",
@@ -25,11 +28,43 @@
     "winston": "^3.17.0"
   },
   "devDependencies": {
+    "@graphql-tools/mock": "^9.0.0",
+    "@jest/globals": "30.0.0-beta.3",
     "@teebay/config": "workspace:^",
     "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.5",
     "@types/jsonwebtoken": "^9.0.9",
-    "prisma": "^5.7.0"
+    "@types/supertest": "^2.0.12",
+    "graphql-tag": "^2.12.6",
+    "jest": "^29.7.0",
+    "jest-mock-extended": "^3.0.5",
+    "prisma": "^5.7.0",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.1.1"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/src",
+      "<rootDir>/tests"
+    ],
+    "testMatch": [
+      "**/__tests__/**/*.test.ts",
+      "**/?(*.)+(spec|test).ts"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "!src/**/*.d.ts",
+      "!src/index.ts"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setup.ts"
+    ],
+    "moduleNameMapper": {
+      "^@teebay/validations(.*)$": "<rootDir>/../../packages/validations/src$1"
+    }
   }
 }
