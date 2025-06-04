@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client';
 import { notifications } from '@mantine/notifications';
 import { useNavigate } from 'react-router-dom';
 
-import { BUY_PRODUCT } from '@/graphql/products';
+import { BUY_PRODUCT, GET_MY_TRANSACTIONS } from '@/graphql/products';
 import { Product } from '@/types';
 
 interface BuyProductModalProps {
@@ -37,7 +37,7 @@ export function BuyProductModal({ opened, onClose, product }: BuyProductModalPro
       cache.evict({ id: `Product:${product.id}` });
       cache.gc();
     },
-    refetchQueries: ['GetMyTransactions'],
+    refetchQueries: [{ query: GET_MY_TRANSACTIONS }],
     awaitRefetchQueries: true,
   });
 
