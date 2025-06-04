@@ -8,6 +8,7 @@ import CreateProduct from './pages/create-product';
 import { DashboardLayout } from './layout/dashboard';
 import AllProduct from './pages/all-products';
 import ProductDetails from './pages/product-details';
+import MyTransactions from './pages/my-transactions';
 
 export function App() {
   return (
@@ -76,6 +77,17 @@ export function App() {
           <ProtectedRoute>
             <DashboardLayout>
               <ProductDetails />
+            </DashboardLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/transactions"
+        element={
+          <ProtectedRoute>
+            <DashboardLayout>
+              <MyTransactions />
             </DashboardLayout>
           </ProtectedRoute>
         }

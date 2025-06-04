@@ -3,12 +3,14 @@ import { Modal, Group, Button, Stack, Text, NumberInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { zodResolver } from 'mantine-form-zod-resolver';
 import { useMutation } from '@apollo/client';
-import { RENT_PRODUCT } from '@/graphql/products';
+import { GET_MY_TRANSACTIONS, RENT_PRODUCT } from '@/graphql/products';
 import { notifications } from '@mantine/notifications';
 import { IconCalendar } from '@tabler/icons-react';
 import { DatePickerInput } from '@mantine/dates';
 import { Product } from '@/types';
 import { useEffect, useState } from 'react';
+import { calculateRentalTotal } from '@/utils/calculate-total-rent';
+import { useNavigate } from 'react-router-dom';
 
 interface RentProductModalProps {
   opened: boolean;
@@ -17,6 +19,7 @@ interface RentProductModalProps {
 }
 
 export function RentProductModal({ opened, onClose, product }: RentProductModalProps) {
+  const navigate = useNavigate();
   const [totalCost, setTotalCost] = useState(0);
   const form = useForm({
     initialValues: {
@@ -25,78 +28,42 @@ export function RentProductModal({ opened, onClose, product }: RentProductModalP
     },
   });
 
-  const [rentProduct, { loading }] = useMutation(RENT_PRODUCT, {
+  const [rentProduct, { loading, data }] = useMutation(RENT_PRODUCT, {
     onCompleted: () => {
       notifications.show({
         title: 'Success',
         message: 'Product rented successfully',
         color: 'green',
       });
+      navigate('/transactions');
       onClose();
     },
     onError: (error) => {
-      console.log(error)
+      console.log(error);
       notifications.show({
         title: 'Error',
         message: error.message,
         color: 'red',
       });
     },
+
+    refetchQueries: [{ query: GET_MY_TRANSACTIONS }],
+    awaitRefetchQueries: true,
   });
 
   useEffect(() => {
     const { fromDate, toDate } = form.values;
     if (fromDate && toDate) {
-      const cost = calculateTotal(fromDate, toDate);
+      const cost = calculateRentalTotal(fromDate, toDate, product.rentPrice, product.rentPeriod);
       setTotalCost(cost);
     } else {
       setTotalCost(0);
     }
-  }, [form.values.fromDate, form.values.toDate]);
+  }, [form.values.fromDate, form.values.toDate, product.rentPeriod, product.rentPrice]);
 
   const parseDateString = (dateStr: Date | string): Date => {
     if (dateStr instanceof Date) return dateStr;
     return new Date(dateStr);
-  };
-
-  const calculateTotal = (fromDate: Date | string, toDate: Date | string) => {
-    try {
-      const startDate = parseDateString(fromDate as string);
-      const endDate = parseDateString(toDate as string);
-
-      if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) return 0;
-      
-      const diffMs = endDate.getTime() - startDate.getTime();
-      if (diffMs <= 0) return 0;
-
-      let units = 1;
-      const oneHour = 1000 * 60 * 60;
-      const oneDay = oneHour * 24;
-      const oneWeek = oneDay * 7;
-      const oneMonth = oneDay * 30; 
-
-      switch (product.rentPeriod) {
-        case 'HOURLY':
-          units = Math.max(1, Math.ceil(diffMs / oneHour));
-          break;
-        case 'DAILY':
-          units = Math.max(1, Math.ceil(diffMs / oneDay));
-          break;
-        case 'WEEKLY':
-          units = Math.max(1, Math.ceil(diffMs / oneWeek));
-          break;
-        case 'MONTHLY':
-          units = Math.max(1, Math.ceil(diffMs / oneMonth));
-          break;
-        default:
-          units = 1;
-      }
-
-      return units * product.rentPrice;
-    } catch (error) {
-      console.error('Error calculating total:', error);
-      return 0;
-    }
   };
 
   const handleSubmit = (values: { fromDate: Date | null; toDate: Date | null }) => {
@@ -160,8 +127,8 @@ export function RentProductModal({ opened, onClose, product }: RentProductModalP
             <Button variant="default" onClick={onClose}>
               Cancel
             </Button>
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               loading={loading}
               disabled={!form.values.fromDate || !form.values.toDate || totalCost <= 0}
             >

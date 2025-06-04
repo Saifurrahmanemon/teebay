@@ -81,12 +81,36 @@ export const resolvers = {
         if (!userId) throw new AuthenticationError();
 
         const id = parseInt(userId);
-        return {
-          purchases: await prisma.sale.findMany({ where: { buyerId: id } }),
-          sales: await prisma.sale.findMany({ where: { sellerId: id } }),
-          rentalsOut: await prisma.rental.findMany({ where: { lenderId: id } }),
-          rentalsIn: await prisma.rental.findMany({ where: { borrowerId: id } }),
+        const results = {
+          purchases: await prisma.sale.findMany({
+            where: { buyerId: id },
+            include: {
+              product: true,
+            },
+          }),
+          sales: await prisma.sale.findMany({
+            where: { sellerId: id },
+            include: {
+              product: true,
+            },
+          }),
+          rentalsOut: await prisma.rental.findMany({
+            where: { lenderId: id },
+            include: {
+              product: true,
+            },
+          }),
+          rentalsIn: await prisma.rental.findMany({
+            where: { borrowerId: id },
+            include: {
+              product: true,
+            },
+          }),
         };
+
+        console.log(results);
+
+        return results;
       },
     ),
 
@@ -251,8 +275,6 @@ export const resolvers = {
       async (_: any, { id, ...updates }: any, { prisma, userId }: Context) => {
         if (!userId) throw new AuthenticationError();
 
-        console.log('id', id);
-
         const existingProduct = await prisma.product.findUnique({
           where: { id },
         });
@@ -332,6 +354,8 @@ export const resolvers = {
           }),
         ]);
 
+        console.log('sale', sale);
+
         return sale[0];
       },
     ),
@@ -366,18 +390,22 @@ export const resolvers = {
         if (conflictingRentals.length > 0) {
           throw new ValidationError('Product is not available for the selected dates');
         }
-
-        const result = await prisma.rental.create({
+        const rental = await prisma.rental.create({
           data: {
-            productId,
-            lenderId: product.userId,
-            borrowerId: parseInt(userId),
+            product: { connect: { id: productId } },
+            lender: { connect: { id: product.userId } },
+            borrower: { connect: { id: parseInt(userId) } },
             fromDate: new Date(fromDate),
             toDate: new Date(toDate),
           },
+          include: {
+            product: true,
+            lender: true,
+            borrower: true,
+          },
         });
 
-        return result;
+        return rental;
       },
     ),
   },

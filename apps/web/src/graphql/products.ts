@@ -53,10 +53,6 @@ export const BUY_PRODUCT = gql`
   mutation BuyProduct($productId: Int!) {
     buyProduct(productId: $productId) {
       id
-      product {
-        id
-        title
-      }
     }
   }
 `;
@@ -138,14 +134,59 @@ export const SUBMIT_PRODUCT_FORM = gql`
   }
 `;
 
-
-
 export const RENT_PRODUCT = gql`
   mutation RentProduct($productId: Int!, $fromDate: String!, $toDate: String!) {
     rentProduct(productId: $productId, fromDate: $fromDate, toDate: $toDate) {
       id
       fromDate
       toDate
+    }
+  }
+`;
+
+export const GET_MY_TRANSACTIONS = gql`
+  query GetMyTransactions {
+    getMyTransactions {
+      purchases {
+        id
+        product {
+          id
+          title
+          price
+        }
+        createdAt
+      }
+      sales {
+        id
+        product {
+          id
+          title
+          price
+        }
+        createdAt
+      }
+      rentalsOut {
+        id
+        product {
+          id
+          title
+          rentPrice
+          rentPeriod
+        }
+        fromDate
+        toDate
+      }
+      rentalsIn {
+        id
+        product {
+          id
+          title
+          rentPrice
+          rentPeriod
+        }
+        fromDate
+        toDate
+      }
     }
   }
 `;

@@ -14,9 +14,11 @@ import {
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { RentProductModal } from './rent-modal';
+import { BuyProductModal } from './buy-modal';
 
 function ProductDetailsComponent({ productId }: { productId: string }) {
   const [rentOpened, { open: openRent, close: closeRent }] = useDisclosure(false);
+  const [buyOpened, { open: openBuy, close: closeBuy }] = useDisclosure(false);
   const { data, loading, error } = useQuery(GET_PRODUCT, {
     variables: { id: productId },
   });
@@ -76,13 +78,14 @@ function ProductDetailsComponent({ productId }: { productId: string }) {
       </Card>
 
       <Flex my="lg" justify="end" gap={10}>
-        <Button>Buy</Button>
+        <Button onClick={openBuy}>Buy</Button>
         <Button variant="light" onClick={openRent}>
           Rent
         </Button>
       </Flex>
 
       <RentProductModal opened={rentOpened} onClose={closeRent} product={product} />
+      <BuyProductModal opened={buyOpened} onClose={closeBuy} product={product} />
     </Container>
   );
 }
