@@ -40,9 +40,7 @@ tsconfig.tsbuildinfo
 *.sqlite3
 
 # Prisma
-packages/*/prisma/migrations/
-apps/*/prisma/migrations/
-schema.prisma.bak
+
 
 # Logs
 logs/

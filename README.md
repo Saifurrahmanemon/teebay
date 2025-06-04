@@ -101,7 +101,7 @@ Before getting started, ensure you have the following installed:
 
 ### Setup
 
-1. **Copy environment files for each workspace:**
+1. **copy .env.example to .env on each workspaces:(currently on apps/api/prisma and apps/web)**
 
    ```sh
     cp .env.example .env
@@ -116,7 +116,7 @@ Before getting started, ensure you have the following installed:
 3. **Setup Database:**
 
     ```sh
-   docker compose up -d   <!--   use docker-compose for ubuntu -->
+   docker compose up -d
    ```
 
 4. **Run database migrations:**
@@ -125,7 +125,14 @@ Before getting started, ensure you have the following installed:
     pnpm migrate:dev
    ```
 
-5. **Run development servers:**
+
+5. **Build Validations:**
+
+   ```sh
+    pnpm package:build 
+   ```
+
+6. **Run development servers:**
    - API:
      ```sh
      pnpm dev:api
@@ -138,7 +145,7 @@ Before getting started, ensure you have the following installed:
      ```sh
      pnpm dev
      ```
-6. **Access Apps:**
+7. **Access Apps:**
    - Web interface: http://localhost:3000
    - GraphQL API playground: http://localhost:4000/graphql
 

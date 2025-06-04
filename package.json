@@ -7,6 +7,7 @@
   ],
   "scripts": {
     "build": "turbo check-types build",
+    "package:build": "pnpm --filter validations build",
     "dev": "turbo dev",
     "dev:web": "turbo run dev --filter=web",
     "dev:api": "turbo run dev --filter=api",
